@@ -72,10 +72,22 @@ export default function AddReport() {
   }
 
   return (
-    <div className="flex flex-col gap-6 p-6 md:p-10 max-w-[1100px] mx-auto w-full min-h-[calc(100vh-120px)] justify-center items-center">
+    <div className="flex flex-col gap-8 p-6 md:p-10 max-w-[1100px] mx-auto w-full min-h-[calc(100vh-61px)]">
+      {/* Page Header */}
+      <div className="flex flex-col gap-2">
+        <span className="mono-label flex items-center gap-2">
+          <span className="inline-block w-5 h-px bg-[#3ad389]" />
+          Live Signal
+        </span>
+        <h1 className="text-display brand-gradient text-[34px] md:text-[40px]">Add Report</h1>
+        <p className="text-[14px] text-[#a1a4a5]">
+          Share real-time crowd updates at your location to keep the predictive model accurate.
+        </p>
+      </div>
+
       {scanning ? (
         /* ---- GPS scanning experience ---- */
-        <div className="flex flex-col items-center justify-center gap-10 max-w-md w-full py-12">
+        <div className="flex-1 flex flex-col items-center justify-center gap-10 max-w-md w-full py-12 mx-auto">
           <div className="relative w-48 h-48 flex items-center justify-center">
             <RadarRing delay={0} />
             <RadarRing delay={0.8} />

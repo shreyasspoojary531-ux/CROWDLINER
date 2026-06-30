@@ -63,7 +63,7 @@ export default function Explore() {
           <span className="inline-block w-5 h-px bg-[#3b9eff]" />
           Discover
         </span>
-        <h1 className="text-display text-[34px] md:text-[40px] text-frost">Explore Places</h1>
+        <h1 className="text-display brand-gradient text-[34px] md:text-[40px]">Explore Places</h1>
         <p className="text-[14px] text-[#a1a4a5]">
           Real-time crowd tracking and predictions for {places.length} locations across Bengaluru.
         </p>
@@ -77,7 +77,7 @@ export default function Explore() {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="Search by location name or area…"
-          className="w-full pl-12 pr-4 py-3.5 bg-[#0b0e14] border border-[#292d30] focus:border-[#3b9eff]/50 text-frost placeholder:text-[#464a4d] text-[14px] font-medium rounded-xl outline-none transition-colors duration-200"
+          className="w-full pl-12 pr-4 py-3.5 bg-transparent dark:bg-[#0b0e14] border border-slate-300 dark:border-[#292d30] focus:border-[#3b9eff]/50 text-slate-950 dark:text-white placeholder:text-slate-400 dark:placeholder:text-[#464a4d] text-[14px] font-medium rounded-xl outline-none transition-colors duration-200"
         />
       </div>
 

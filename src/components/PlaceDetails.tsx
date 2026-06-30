@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { ArrowLeft, Pin, PinOff, Clock, AlertCircle, Sparkles, MapPin, Calendar } from "lucide-react";
+import { ArrowLeft, Pin, PinOff, Clock, AlertCircle, Sparkles, MapPin, Calendar, ChevronDown } from "lucide-react";
 import { useCrowdStore } from "@/store/useCrowdStore";
 import {
   getHourIndex,
@@ -230,17 +230,22 @@ export default function PlaceDetails() {
 
             <div className="flex flex-col gap-1.5">
               <label className="mono-label">Select target time</label>
-              <select
-                value={selectedHourIdx}
-                onChange={(e) => setSelectedHourIdx(parseInt(e.target.value, 10))}
-                className="w-full bg-[#0b0e14] border border-[#292d30] text-frost text-[13px] font-medium rounded-lg py-2.5 px-3.5 outline-none focus:border-[#3b9eff]/50 cursor-pointer transition-colors"
-              >
-                {OPERATING_HOURS.map((hr, idx) => (
-                  <option key={hr} value={idx} className="bg-[#0b0e14]">
-                    {hr} {idx === defaultHourIndex ? "(now)" : ""}
-                  </option>
-                ))}
-              </select>
+              <div className="relative w-full">
+                <select
+                  value={selectedHourIdx}
+                  onChange={(e) => setSelectedHourIdx(parseInt(e.target.value, 10))}
+                  className="w-full appearance-none bg-transparent dark:bg-[#0b0e14] border border-slate-300 dark:border-[#292d30] text-slate-950 dark:text-white text-[13px] font-medium rounded-lg py-2.5 pl-3.5 pr-10 outline-none focus:border-[#3b9eff]/50 cursor-pointer transition-colors"
+                >
+                  {OPERATING_HOURS.map((hr, idx) => (
+                    <option key={hr} value={idx} className="bg-white text-slate-900 dark:bg-[#0b0e14] dark:text-white">
+                      {hr} {idx === defaultHourIndex ? "(now)" : ""}
+                    </option>
+                  ))}
+                </select>
+                <div className="absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400 dark:text-[#a1a4a5]">
+                  <ChevronDown className="w-4 h-4" strokeWidth={2} />
+                </div>
+              </div>
             </div>
 
             <div className="h-px bg-[#292d30]" />

@@ -1,7 +1,14 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Pin, ArrowRight, Activity, TrendingUp, Users, MapPin } from "lucide-react";
+import {
+  Pin,
+  ArrowRight,
+  Activity,
+  TrendingUp,
+  Users,
+  MapPin,
+} from "lucide-react";
 import { useCrowdStore } from "@/store/useCrowdStore";
 import { getHourIndex, getCrowdStatus } from "@/utils/crowdData";
 import CrowdBar from "./ui/CrowdBar";
@@ -24,12 +31,17 @@ export default function Dashboard() {
 
   const totalPlaces = places.length;
   const pinnedCount = pinnedPlaces.length;
-  const avgCrowd = Math.round(places.reduce((acc, p) => acc + p.crowdCurve[hourIdx], 0) / totalPlaces);
+  const avgCrowd = Math.round(
+    places.reduce((acc, p) => acc + p.crowdCurve[hourIdx], 0) / totalPlaces,
+  );
   const cityStatus = getCrowdStatus(avgCrowd);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
-    e.currentTarget.style.setProperty("--mouse-x", `${e.clientX - rect.left}px`);
+    e.currentTarget.style.setProperty(
+      "--mouse-x",
+      `${e.clientX - rect.left}px`,
+    );
     e.currentTarget.style.setProperty("--mouse-y", `${e.clientY - rect.top}px`);
   };
 
@@ -39,7 +51,11 @@ export default function Dashboard() {
   };
   const itemVariants = {
     initial: { opacity: 0, y: 14 },
-    animate: { opacity: 1, y: 0, transition: { duration: 0.45, ease: smoothEase } },
+    animate: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.45, ease: smoothEase },
+    },
   };
 
   return (
@@ -50,22 +66,29 @@ export default function Dashboard() {
       className="flex flex-col gap-8 p-5 md:p-8 lg:p-10 max-w-[1220px] mx-auto w-full"
     >
       {/* Hero */}
-      <motion.div variants={itemVariants} className="flex flex-col gap-4 max-w-4xl pt-2">
+      <motion.div
+        variants={itemVariants}
+        className="flex flex-col gap-4 max-w-4xl pt-2"
+      >
         <span className="mono-label flex items-center gap-2">
           <span className="inline-block w-6 h-px bg-slate-400 dark:bg-slate-500" />
           Live operations dashboard
         </span>
-        <h1 className="text-display brand-gradient text-[40px] md:text-[56px] max-w-3xl">
+        {/* Changed leading-[1.1] to leading-[1.2] and added a tiny bit of bottom padding pb-1 */}
+        <h1 className="text-display brand-gradient text-[40px] md:text-[56px] leading-[1.2] md:leading-[1.2] pb-1 max-w-3xl ">
           Real-Time Crowd Intelligence Network
         </h1>
         <p className="text-[15px] md:text-[16px] text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl">
-          Track crowd density, monitor commute windows, and make planning decisions from
-          live Bengaluru location signals.
+          Track crowd density, monitor commute windows, and make planning
+          decisions from live Bengaluru location signals.
         </p>
       </motion.div>
 
       {/* Statistics — three quiet metric tiles */}
-      <motion.div variants={itemVariants} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <motion.div
+        variants={itemVariants}
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+      >
         <StatTile
           label="City Density Index"
           value={`${avgCrowd}%`}
@@ -90,7 +113,10 @@ export default function Dashboard() {
       <motion.div variants={itemVariants} className="flex flex-col gap-5">
         <div className="flex items-end justify-between">
           <div className="flex items-center gap-2.5">
-            <Pin className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400 rotate-45" strokeWidth={2} />
+            <Pin
+              className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400 rotate-45"
+              strokeWidth={2}
+            />
             <h2 className="mono-label">Pinned Places</h2>
           </div>
           {pinnedCount > 3 && (
@@ -128,7 +154,10 @@ export default function Dashboard() {
                         {place.name}
                       </h3>
                       <p className="text-[12px] text-slate-500 dark:text-slate-400 flex items-center gap-1.5 truncate">
-                        <MapPin className="w-3.5 h-3.5 shrink-0" strokeWidth={1.75} />
+                        <MapPin
+                          className="w-3.5 h-3.5 shrink-0"
+                          strokeWidth={1.75}
+                        />
                         <span>{place.address}</span>
                       </p>
                     </div>
@@ -152,11 +181,18 @@ export default function Dashboard() {
                   {/* Footer */}
                   <div className="flex items-center justify-between text-[11px] border-t border-slate-200/80 dark:border-white/10 pt-3 mt-4">
                     <span className="flex items-center gap-1.5 text-slate-500 dark:text-slate-400">
-                      <Activity className="w-3.5 h-3.5 text-slate-500 dark:text-slate-300" strokeWidth={1.75} />
-                      <span className="uppercase tracking-wide font-mono text-[10px]">{place.category}</span>
+                      <Activity
+                        className="w-3.5 h-3.5 text-slate-500 dark:text-slate-300"
+                        strokeWidth={1.75}
+                      />
+                      <span className="uppercase tracking-wide font-mono text-[10px]">
+                        {place.category}
+                      </span>
                     </span>
                     <span className="font-mono text-[10px] text-slate-500 dark:text-slate-400">
-                      {place.lastUpdated.includes("min") ? place.lastUpdated : `Sync: ${place.lastUpdated}`}
+                      {place.lastUpdated.includes("min")
+                        ? place.lastUpdated
+                        : `Sync: ${place.lastUpdated}`}
                     </span>
                   </div>
                 </motion.div>
@@ -184,7 +220,10 @@ function StatTile({
 }) {
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
-    e.currentTarget.style.setProperty("--mouse-x", `${e.clientX - rect.left}px`);
+    e.currentTarget.style.setProperty(
+      "--mouse-x",
+      `${e.clientX - rect.left}px`,
+    );
     e.currentTarget.style.setProperty("--mouse-y", `${e.clientY - rect.top}px`);
   };
 
@@ -216,9 +255,12 @@ function EmptyPinState({ onExplore }: { onExplore: () => void }) {
         <Pin className="w-5 h-5 rotate-45" strokeWidth={1.75} />
       </div>
       <div className="flex flex-col gap-1.5">
-        <p className="text-slate-950 dark:text-white text-[14px] font-semibold">No locations pinned to your dashboard</p>
+        <p className="text-slate-950 dark:text-white text-[14px] font-semibold">
+          No locations pinned to your dashboard
+        </p>
         <p className="text-slate-500 dark:text-slate-400 text-[12px] max-w-sm leading-relaxed">
-          Add places from the Explore view to monitor their crowd metrics immediately.
+          Add places from the Explore view to monitor their crowd metrics
+          immediately.
         </p>
       </div>
       <button

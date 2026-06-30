@@ -22,18 +22,26 @@ export default function ReportForm({ place, onBack }: ReportFormProps) {
   const [istDateStr, setIstDateStr] = useState("");
   const [originalCurve, setOriginalCurve] = useState<number[]>([]);
 
+  // SSR-safe: capture current time/hour only after mount so server+client HTML match
+  const [mounted, setMounted] = useState(false);
+  const [nowMs, setNowMs] = useState(0);
+  const [currentHour, setCurrentHour] = useState(12); // neutral default
+
   const [progressOffset, setProgressOffset] = useState(2 * Math.PI * 64);
   const [liveCounter, setLiveCounter] = useState(0);
 
   useEffect(() => {
-    if (place) setOriginalCurve([...place.crowdCurve]);
-  }, [place]);
-
-  useEffect(() => {
     const now = new Date();
+    setNowMs(Date.now());
+    setCurrentHour(now.getHours());
+    setMounted(true);
     setIstTimeStr(now.toLocaleTimeString("en-IN", { timeZone: "Asia/Kolkata", hour: "2-digit", minute: "2-digit", hour12: true }));
     setIstDateStr(now.toLocaleDateString("en-IN", { timeZone: "Asia/Kolkata", weekday: "short", day: "numeric", month: "short", year: "numeric" }));
   }, []);
+
+  useEffect(() => {
+    if (place) setOriginalCurve([...place.crowdCurve]);
+  }, [place]);
 
   // Radial score + counter animation (logic preserved)
   useEffect(() => {
@@ -70,12 +78,11 @@ export default function ReportForm({ place, onBack }: ReportFormProps) {
     }, 1000);
   };
 
-  const now = Date.now();
   const cooldownPeriod = 30 * 60 * 1000;
-  const isCooldownActive = lastReportTime && now - lastReportTime < cooldownPeriod;
-  const remainingMinutes = lastReportTime ? Math.ceil((cooldownPeriod - (now - lastReportTime)) / 60000) : 0;
+  // Use mounted-state nowMs so SSR renders the same "not in cooldown" HTML as client first paint
+  const isCooldownActive = mounted && lastReportTime != null && nowMs - lastReportTime < cooldownPeriod;
+  const remainingMinutes = (mounted && lastReportTime) ? Math.ceil((cooldownPeriod - (nowMs - lastReportTime)) / 60000) : 0;
 
-  const currentHour = new Date().getHours();
   const hourIdx = getHourIndex(currentHour);
   const currentPrediction = originalCurve[hourIdx] || place.crowdCurve[hourIdx];
 
@@ -111,7 +118,11 @@ export default function ReportForm({ place, onBack }: ReportFormProps) {
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-          className="layer-2 surface-sheen rounded-2xl p-7 flex flex-col gap-6 items-center text-center"
+          className="premium-glass-card surface-sheen rounded-2xl p-7 flex flex-col gap-6 items-center text-center"
+          style={{
+            backdropFilter: "blur(32px) saturate(180%)",
+            WebkitBackdropFilter: "blur(32px) saturate(180%)",
+          }}
         >
           {/* Radial score */}
           <div className="relative w-36 h-36 flex items-center justify-center">

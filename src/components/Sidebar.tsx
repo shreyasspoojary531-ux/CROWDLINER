@@ -3,8 +3,12 @@
 import { motion } from "framer-motion";
 import { LayoutDashboard, Compass, PlusCircle } from "lucide-react";
 import { useCrowdStore, ViewType } from "@/store/useCrowdStore";
+
 /**
  * Minimal SaaS navigation rail with theme-aware monochrome active states.
+ * Desktop: wider sidebar at 260px with full labels.
+ * Tablet (md): 68px icon-only rail with tooltips.
+ * Mobile: bottom tab bar.
  */
 export default function Sidebar() {
   const { activeView, setView } = useCrowdStore();
@@ -21,7 +25,7 @@ export default function Sidebar() {
   return (
     <>
       {/* Desktop (>=1024px) and Tablet (768–1023px) floating sidebar */}
-      <aside className="sidebar-shell hidden md:flex flex-col justify-between p-3 lg:p-4 sticky top-[61px] h-[calc(100vh-61px)] shrink-0 transition-all duration-300 w-[68px] lg:w-[232px]">
+      <aside className="sidebar-shell hidden md:flex flex-col justify-between p-3 lg:p-4 sticky top-[61px] h-[calc(100vh-61px)] shrink-0 transition-all duration-300 w-[68px] lg:w-[260px] relative">
         <div className="flex flex-col gap-1">
           {/* Section label (desktop only) */}
           <span className="hidden lg:inline mono-label px-3 pt-2 pb-3">Navigate</span>
@@ -103,6 +107,11 @@ export default function Sidebar() {
             Real-time crowd density models powered by Bengaluru reports.
           </p>
         </div>
+
+        {/* Vertical border glow stroke along sidebar right separator */}
+        <div className="absolute top-0 bottom-0 right-0 w-px overflow-hidden pointer-events-none">
+          <div className="w-full h-1/3 bg-gradient-to-b from-transparent via-[#3b9eff]/50 to-transparent animate-border-glow-v" />
+        </div>
       </aside>
 
       {/* Mobile bottom tab bar (<768px) */}
@@ -114,7 +123,7 @@ export default function Sidebar() {
             <button
               key={item.id}
               onClick={() => setView(item.id)}
-              className="relative flex flex-col items-center justify-center gap-1 py-1 px-4 min-w-[72px] outline-none"
+              className="relative flex flex-col items-center justify-center gap-1 py-1 px-4 min-w-[72px] outline-none cursor-pointer"
             >
               <div className="relative flex items-center justify-center">
                 {active && (

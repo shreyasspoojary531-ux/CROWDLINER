@@ -155,7 +155,7 @@ export const INITIAL_PLACES: Place[] = [
     name: "Brigade Road",
     address: "Shanthala Nagar, Ashok Nagar",
     category: "shopping",
-    isPinned: true,
+    isPinned: false,
     lastUpdated: "Synced with IST",
     crowdCurve: [15, 20, 28, 40, 50, 62, 72, 75, 78, 80, 85, 90, 95, 98, 94, 85, 65, 45]
   },
@@ -164,7 +164,7 @@ export const INITIAL_PLACES: Place[] = [
     name: "Commercial Street",
     address: "Tasker Town, Shivaji Nagar",
     category: "shopping",
-    isPinned: true,
+    isPinned: false,
     lastUpdated: "Synced with IST",
     crowdCurve: [10, 15, 25, 45, 60, 75, 82, 85, 80, 83, 87, 92, 96, 94, 82, 60, 40, 20]
   },
@@ -173,7 +173,7 @@ export const INITIAL_PLACES: Place[] = [
     name: "Indiranagar",
     address: "100 Feet Road, Metro Zone",
     category: "shopping", // Shopping & dining
-    isPinned: true,
+    isPinned: false,
     lastUpdated: "Synced with IST",
     crowdCurve: [15, 22, 28, 38, 45, 58, 68, 70, 72, 75, 78, 84, 92, 96, 95, 90, 75, 55]
   },

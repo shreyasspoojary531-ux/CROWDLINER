@@ -151,6 +151,10 @@
   background: rgba(100, 116, 139, 0.7);
 }
 
+html {
+  zoom: 1.14;
+}
+
 body {
   background-color: var(--color-void-black);
   color: var(--color-frost);
@@ -552,4 +556,29 @@ button:disabled {
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+/* =========================================================================
+   BORDER GLOW STROKE ANIMATIONS
+   A single glowing particle that travels along the separator lines between
+   the nav / sidebar and the main content area.
+   ========================================================================= */
+
+/* Horizontal stroke — travels along navbar bottom border */
+@keyframes border-glow-h {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(400%); }
+}
+.animate-border-glow-h {
+  animation: border-glow-h 5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Vertical stroke — travels along sidebar right border */
+@keyframes border-glow-v {
+  0%   { transform: translateY(-100%); }
+  100% { transform: translateY(400%); }
+}
+.animate-border-glow-v {
+  animation: border-glow-v 5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  animation-delay: 2.5s; /* offset so h and v strokes stagger nicely */
 }

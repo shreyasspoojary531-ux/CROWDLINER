@@ -96,14 +96,35 @@ export const useCrowdStore = create<CrowdStoreState>((set, get) => ({
   },
 
   togglePin: (id) => {
-    const updatedPlaces = get().places.map((place) => {
+    const places = get().places;
+    const targetPlace = places.find((place) => place.id === id);
+    if (!targetPlace) return;
+
+    const isPinning = !targetPlace.isPinned;
+    let updatedPlaces = [...places];
+
+    if (isPinning) {
+      const pinned = updatedPlaces.filter((p) => p.isPinned);
+      if (pinned.length >= 3) {
+        const firstPinned = pinned[0];
+        updatedPlaces = updatedPlaces.map((p) => {
+          if (p.id === firstPinned.id) {
+            return { ...p, isPinned: false };
+          }
+          return p;
+        });
+        get().showToast(`Unpinned "${firstPinned.name}" to keep maximum 3 pins`, "info");
+      }
+    }
+
+    updatedPlaces = updatedPlaces.map((place) => {
       if (place.id === id) {
-        const isPinned = !place.isPinned;
+        const newPinnedState = !place.isPinned;
         get().showToast(
-          isPinned ? `Pinned "${place.name}" to Dashboard` : `Unpinned "${place.name}"`,
+          newPinnedState ? `Pinned "${place.name}" to Dashboard` : `Unpinned "${place.name}"`,
           "success"
         );
-        return { ...place, isPinned };
+        return { ...place, isPinned: newPinnedState };
       }
       return place;
     });
