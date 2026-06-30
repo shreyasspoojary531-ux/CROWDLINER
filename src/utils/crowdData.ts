@@ -28,7 +28,10 @@ export function getHourLabel(index: number): string {
   return OPERATING_HOURS[index] || "6 AM";
 }
 
-// Helper to determine text label and color for a crowd percentage
+// Helper to determine text label and color for a crowd percentage.
+// Colors follow the Resend status system (design.md): vivid data colors used
+// ONLY as functional indicators — green / yellow / blue / red. The brand
+// electric-blue (#3b9eff) carries the "High" tier so the accent stays singular.
 export function getCrowdStatus(percentage: number): {
   label: "Low" | "Medium" | "High" | "Very High";
   color: string;
@@ -38,30 +41,30 @@ export function getCrowdStatus(percentage: number): {
   if (percentage <= 35) {
     return {
       label: "Low",
-      color: "#10B981", // Success Green
-      badgeBg: "rgba(16, 185, 129, 0.1)",
-      badgeText: "text-emerald-400"
+      color: "#3ad389", // Delivered Green
+      badgeBg: "rgba(58, 211, 137, 0.10)",
+      badgeText: "text-[#3ad389]",
     };
   } else if (percentage <= 65) {
     return {
       label: "Medium",
-      color: "#F59E0B", // Warning Yellow
-      badgeBg: "rgba(245, 158, 11, 0.1)",
-      badgeText: "text-amber-400"
+      color: "#ffca16", // Complained Yellow
+      badgeBg: "rgba(255, 202, 22, 0.10)",
+      badgeText: "text-[#ffca16]",
     };
   } else if (percentage <= 85) {
     return {
       label: "High",
-      color: "#FF7A00", // Brand Orange
-      badgeBg: "rgba(255, 122, 0, 0.1)",
-      badgeText: "text-orange-400"
+      color: "#3b9eff", // Electric Blue (brand accent — singular chromatic signal)
+      badgeBg: "rgba(59, 158, 255, 0.10)",
+      badgeText: "text-[#3b9eff]",
     };
   } else {
     return {
       label: "Very High",
-      color: "#EF4444", // Danger Red
-      badgeBg: "rgba(239, 68, 68, 0.1)",
-      badgeText: "text-red-400"
+      color: "#ff9592", // Bounced Red
+      badgeBg: "rgba(255, 149, 146, 0.10)",
+      badgeText: "text-[#ff9592]",
     };
   }
 }
